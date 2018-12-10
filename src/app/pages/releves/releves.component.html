@@ -1,0 +1,55 @@
+<h2>Liste des releves de {{nomVille}} : {{latitude}} {{longitude}}  </h2>
+
+<table class="table table-striped">
+  <thead class="thead-default">
+    <tr>
+      <th>Date</th>
+      <th>Temperature</th>
+      <th>Humidite</th>
+      <th>Ensoleillement</th>
+      <th>Modifier</th>
+      <th>Effacer</th>
+    </tr>
+  </thead>
+  <tbody class="tbody-default">
+        <tr *ngFor="let releve of listeReleves">
+
+        <td>{{releve.date | date :'EEEE dd/MM/yyyy à hh:mm:ss'}}</td>
+
+        <td *ngIf="modifyReleve!=releve">{{releve.temperature}}</td>
+        <td *ngIf="modifyReleve==releve" >
+          <input [(ngModel)]="releve.temperature" type="number" placeholder="Modifier votre valeur"/></td>
+
+        <td *ngIf="modifyReleve!=releve">{{releve.humidite}}</td>
+        <td *ngIf="modifyReleve==releve" >
+          <input [(ngModel)]="releve.humidite" type="number" placeholder="Modifier votre valeur"/></td>
+
+
+        <td *ngIf="modifyReleve!=releve">{{releve.ensoleillement}}</td>
+        <td *ngIf="modifyReleve==releve" >
+          <input [(ngModel)]="releve.ensoleillement" type="number" placeholder="Modifier votre valeur"/></td>
+
+        <td *ngIf="modifyReleve!=releve">
+          <input (click)="modifyReleve=releve" class="btn btn-primary" type="submit" value="Modifier"/>
+        </td>
+        <td *ngIf="modifyReleve==releve">
+            <input (click)="modifierData(releve)" class="btn btn-success" type="submit" value="Valider"/>
+          </td>
+        <td>
+        <input (click)="supprimerData(releve.id)" class="btn btn-danger" type="submit" value="Effacer"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<section class="addOptionR">
+  <div class="form-style-8">
+    <h2>Ajouter de nouvelles données</h2>
+    <form (ngSubmit)="ajouterData()">
+      <input [(ngModel)]="releve.temperature" type="number" name="temperature" placeholder="Temperature"/>
+      <input [(ngModel)]="releve.humidite" type="number" name="humidite" placeholder="Humidite"/>
+      <input [(ngModel)]="releve.ensoleillement" type="number" name="ensoleillement" placeholder="Ensoleillement"/>
+      <input type="submit" value="Ajouter"/>
+    </form>
+  </div>
+</section>
